@@ -1,0 +1,1 @@
+/home/debian-kristen/RiderProjects/pomodoro/.sonarqube/out/0
