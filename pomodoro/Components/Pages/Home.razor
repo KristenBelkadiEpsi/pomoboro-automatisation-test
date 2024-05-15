@@ -5,78 +5,111 @@
 
 
 <h1>Pomodoro Timer</h1>
+<h2>(commençant toujours par le travail)</h2>
+<input type="radio" checked="@(SelectedMode == TypePomodoro.TP_25_5)" name="type de pomodoro" @onchange="() => UpdateTypePomodoro(TypePomodoro.TP_25_5)"/>
+<label>25/5</label>
+<p></p>
+<input type="radio" checked="@(SelectedMode == TypePomodoro.TP_45_15)" name="type de pomodoro" @onchange="() => UpdateTypePomodoro(TypePomodoro.TP_45_15)"/>
+<label>45/15</label>
+<p></p>
+<button @onclick="Start">Lancer</button>
+<button>Mettre en pause</button>
+<button>Réinitialiser</button>
+<p>time left: @TimeLeft.ToString()</p>
+<h3>Historique</h3>
+<ul>
+    @foreach (var step in Historic)
+    {
+        <li></li>
+    }
+</ul>
 
-<p>Time Left: @timeLeft.ToString(@"mm\:ss")</p>
-<button @onclick="StartTimer">Start</button>
-<button @onclick="PauseTimer">Pause</button>
-<button @onclick="StopTimer">Stop</button>
-
-<h2>Session History</h2>
-@if (sessions.Count > 0)
+@code
 {
-    <ul>
-        @foreach (var session in sessions)
-        {
-            <li>@session.StartTime: @session.Duration (Type: @session.Type)</li>
-        }
-    </ul>
-}
+    public TimeSpan TimeLeft = TimeSpan.FromMinutes(25);
+    public Timer Timer;
+    public List<String> Historic;
+    public bool IsTimerRunning = false;
+    public bool isWorking = true;
+    public TimeSpan TotalTime = TimeSpan.FromHours(0);
+    [Parameter] public TypePomodoro SelectedMode { get; set; }
 
-<p>Total Work Time: @totalWorkTime</p>
 
-@code {
-    private TimeSpan timeLeft = TimeSpan.FromMinutes(25);
-    private List<Session> sessions = new List<Session>();
-    private bool isTimerRunning;
-    private Timer timer;
-    private TimeSpan totalWorkTime;
-
-    private void StartTimer()
+    public Home()
     {
-        if (!isTimerRunning)
-        {
-            timer = new Timer(async (_) => { await InvokeAsync(Tick);
-                await InvokeAsync(StateHasChanged);
-            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
-            sessions.Add(new Session { StartTime = DateTime.Now, Duration = TimeSpan.FromMinutes(25), Type = "Work" });
-            isTimerRunning = true;
-        }
     }
 
-    private void PauseTimer()
+    public void UpdateTypePomodoro(TypePomodoro t)
     {
-        StopTimer();
-        sessions.Last().Duration = DateTime.Now - sessions.Last().StartTime;
-        sessions.Add(new Session { StartTime = DateTime.Now, Duration = TimeSpan.FromMinutes(5), Type = "Pause" });
-        timeLeft = TimeSpan.FromMinutes(5);
-        StartTimer();
-    }
-
-    private void StopTimer()
-    {
-        timer?.Dispose();
-        isTimerRunning = false;
-        UpdateTotalWorkTime();
-    }
-
-    private void Tick()
-    {
-
-        if (timeLeft.TotalSeconds > 0)
+        SelectedMode = t;
+        if (SelectedMode is TypePomodoro.TP_25_5)
         {
-            timeLeft -= TimeSpan.FromSeconds(1);
+            TimeLeft = TimeSpan.FromMinutes(25);
         }
         else
         {
-            JSRuntime.InvokeVoidAsync("alert", "Session complete!");
-            StopTimer();
-            timeLeft = TimeSpan.FromMinutes(25); // Reset timer
+            TimeLeft = TimeSpan.FromMinutes(45);
         }
     }
 
-    private void UpdateTotalWorkTime()
+    private void Start()
     {
-        totalWorkTime = TimeSpan.FromSeconds(sessions.Where(s => s.Type == "Work").Sum(s => (DateTime.Now - s.StartTime).TotalSeconds));
+        if (!IsTimerRunning)
+        {
+            Timer = new Timer(async (_) =>
+            {
+                await InvokeAsync(Update);
+                // await InvokeAsync(StateHasChanged);
+            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+            Historic.Add();
+            IsTimerRunning = true;
+        }
     }
 
+    public void UpdateTotalWorkTime()
+    {
+        TotalTime = TotalTime + 
+    }
+
+    public void StopTimer()
+    {
+        Timer?.Dispose();
+        IsTimerRunning = false;
+        UpdateTotalWorkTime();
+    }
+
+    private void Update()
+    {
+        if (TimeLeft.TotalSeconds > 0)
+        {
+            TimeLeft = TimeLeft - TimeSpan.FromSeconds(1);
+        }
+        else
+        {
+            JSRuntime.InvokeVoidAsync("alert", "le timer est fini !");
+            StopTimer();
+            if (SelectedMode == TypePomodoro.TP_25_5)
+            {
+                if (isWorking)
+                {
+                    TimeLeft = TimeSpan.FromMinutes(5);
+                }
+                else
+                {
+                    TimeLeft = TimeSpan.FromMinutes(25);
+                }
+            }
+            else
+            {
+                if (isWorking)
+                {
+                    TimeLeft = TimeSpan.FromMinutes(15);
+                }
+                else
+                {
+                    TimeLeft = TimeSpan.FromMinutes(45);
+                }
+            }
+        }
+    }
 }

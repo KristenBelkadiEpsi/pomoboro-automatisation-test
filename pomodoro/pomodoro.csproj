@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <Compile Include="wwwroot\Models\Session.cs" />
+      <Compile Include="wwwroot\Models\TypePomodoro.cs" />
     </ItemGroup>
 
 </Project>

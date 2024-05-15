@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets/Models/Session.cs"
     },
     {
+      "Id": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/Models/TypePomodoro.cs",
+      "PackagePath": "staticwebassets/Models/TypePomodoro.cs"
+    },
+    {
       "Id": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/app.css",
       "PackagePath": "staticwebassets/app.css"
     },
