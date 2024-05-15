@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/obj/Debug/net8.0/scopedcss/projectbundle/pomodoro.bundle.scp.css",
+      "PackagePath": "staticwebassets/pomodoro.bundle.scp.css"
+    },
+    {
+      "Id": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/app.css",
+      "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/bootstrap/bootstrap.min.css",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css"
+    },
+    {
+      "Id": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/bootstrap/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.pomodoro.props",
+      "PackagePath": "build\\pomodoro.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.pomodoro.props",
+      "PackagePath": "buildMultiTargeting\\pomodoro.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.pomodoro.props",
+      "PackagePath": "buildTransitive\\pomodoro.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.pomodoro.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
