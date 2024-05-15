@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "w4A9pOzfZ+GKc2NxT0+tPn/Nf2cwm0AJtT9OyhdF0/o=",
+  "Hash": "XFIQVYV5Yp+eXTSkMUPrg5+B0gF+OIZcQtelvtS5fj8=",
   "Source": "pomodoro",
   "BasePath": "_content/pomodoro",
   "Mode": "Default",
@@ -129,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/favicon.png"
+    },
+    {
+      "Identity": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/Models/Session.cs",
+      "SourceId": "pomodoro",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/debian-kristen/RiderProjects/pomodoro/pomodoro/wwwroot/",
+      "BasePath": "_content/pomodoro",
+      "RelativePath": "Models/Session.cs",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Models/Session.cs"
     }
   ]
 }

@@ -6,4 +6,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Include="wwwroot\Models\Session.cs" />
+    </ItemGroup>
+
 </Project>

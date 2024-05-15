@@ -27,3 +27,4 @@
 /home/debian-kristen/RiderProjects/pomodoro/pomodoro/obj/Debug/net8.0/pomodoro.pdb
 /home/debian-kristen/RiderProjects/pomodoro/pomodoro/obj/Debug/net8.0/pomodoro.genruntimeconfig.cache
 /home/debian-kristen/RiderProjects/pomodoro/pomodoro/obj/Debug/net8.0/ref/pomodoro.dll
+/home/debian-kristen/RiderProjects/pomodoro/pomodoro/obj/Debug/net8.0/pomodoro.sourcelink.json
