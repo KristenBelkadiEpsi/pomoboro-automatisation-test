@@ -6,6 +6,18 @@
 
 <h1>Pomodoro Timer</h1>
 
+<select @bind="selectedDurationIndex">
+    @for (var i = 0; i < durationOptions.Count; i++)
+    {
+        <option value="@i">@durationOptions[i].minutes minutes (Pause: @durationOptions[i].pauseMinutes minutes)</option>
+    }
+</select>
+
+
+@{
+    var selectedDuration = durationOptions[selectedDurationIndex];
+}
+@* <p>Time Left: @selectedDuration.minutes minutes</p> *@
 <p>Time Left: @timeLeft.ToString(@"mm\:ss")</p>
 <button @onclick="StartTimer">Start</button>
 <button @onclick="PauseTimer">Pause</button>
@@ -25,20 +37,32 @@
 <p>Total Work Time: @totalWorkTime</p>
 
 @code {
-    private TimeSpan timeLeft = TimeSpan.FromMinutes(25);
+    private TimeSpan timeLeft = TimeSpan.Zero; // Initialiser à TimeSpan.Zero
     private List<Session> sessions = new List<Session>();
     private bool isTimerRunning;
     private Timer timer;
     private TimeSpan totalWorkTime;
 
+    private int selectedDurationIndex = 0; // Index de la durée sélectionnée dans la liste
+    private List<(int minutes, int pauseMinutes)> durationOptions = new List<(int minutes, int pauseMinutes)>
+    {
+    (25, 5), // Durée de travail: 25 minutes, Pause: 5 minutes
+    (45, 15) // Durée de travail: 45 minutes, Pause: 15 minutes
+    };
+
+
     private void StartTimer()
     {
         if (!isTimerRunning)
         {
-            timer = new Timer(async (_) => { await InvokeAsync(Tick);
+            var selectedDuration = durationOptions[selectedDurationIndex];
+            timeLeft = TimeSpan.FromMinutes(selectedDuration.minutes); // Utiliser la durée sélectionnée
+            timer = new Timer(async (_) =>
+            {
+                await InvokeAsync(Tick);
                 await InvokeAsync(StateHasChanged);
             }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
-            sessions.Add(new Session { StartTime = DateTime.Now, Duration = TimeSpan.FromMinutes(25), Type = "Work" });
+            sessions.Add(new Session { StartTime = DateTime.Now, Duration = TimeSpan.FromMinutes(selectedDuration.minutes), Type = "Work" });
             isTimerRunning = true;
         }
     }
@@ -46,9 +70,10 @@
     private void PauseTimer()
     {
         StopTimer();
+        var selectedDuration = durationOptions[selectedDurationIndex];
         sessions.Last().Duration = DateTime.Now - sessions.Last().StartTime;
-        sessions.Add(new Session { StartTime = DateTime.Now, Duration = TimeSpan.FromMinutes(5), Type = "Pause" });
-        timeLeft = TimeSpan.FromMinutes(5);
+        sessions.Add(new Session { StartTime = DateTime.Now, Duration = TimeSpan.FromMinutes(selectedDuration.pauseMinutes), Type = "Pause" });
+        timeLeft = TimeSpan.FromMinutes(selectedDuration.pauseMinutes);
         StartTimer();
     }
 
