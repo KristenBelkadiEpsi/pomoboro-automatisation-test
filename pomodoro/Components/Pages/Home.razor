@@ -35,7 +35,9 @@
     {
         if (!isTimerRunning)
         {
-            timer = new Timer(_ => InvokeAsync(Tick), null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+            timer = new Timer(async (_) => { await InvokeAsync(Tick);
+                await InvokeAsync(StateHasChanged);
+            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
             sessions.Add(new Session { StartTime = DateTime.Now, Duration = TimeSpan.FromMinutes(25), Type = "Work" });
             isTimerRunning = true;
         }
@@ -59,6 +61,7 @@
 
     private void Tick()
     {
+
         if (timeLeft.TotalSeconds > 0)
         {
             timeLeft -= TimeSpan.FromSeconds(1);
